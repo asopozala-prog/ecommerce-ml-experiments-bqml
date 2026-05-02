@@ -70,3 +70,21 @@ Planned structure:
 ├── LICENSE                        # MIT license
 └── sql/
     └── large_order_workflow.sql   # End-to-end large-order classification workflow
+   ### 3. Daily Demand Forecasting (ARIMA_PLUS)
+
+   We aggregate the thelook_ecommerce orders to a daily revenue time series,
+   then train an `ARIMA_PLUS` model in BigQuery ML to forecast the next 90 days.
+
+   - Target: `daily_revenue`
+   - Training data: 2019-01-04 to 2026-01-31
+   - Forecast horizon: 90 days (2026-02-01 to 2026-05-01)
+
+   Results:
+   - MAE ≈ 7.2k, RMSE ≈ 18.6k, MAPE ≈ 25%
+   - The model tracks the general trend well but underestimates large
+     end-of-month promotional spikes in April 2026.
+
+   This experiment demonstrates both:
+   - How to use `ARIMA_PLUS` for demand forecasting, and
+   - The importance of external features (e.g., promotions) when
+     forecasting sharp spikes in revenue.
